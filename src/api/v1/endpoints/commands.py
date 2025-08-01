@@ -24,7 +24,6 @@ class CommandResponse(BaseModel):
     position: dict[str, int]
     direction: str
     obstacle_detected: bool = False
-    stopped_at: int | None = None
 
 
 @router.post("/commands", response_model=CommandResponse)
@@ -60,7 +59,6 @@ async def execute_commands(request: CommandRequest, db: DBSession):
     y_position = result["position"]["y"]
     direction = result["direction"]
     obstacle_detected = result["obstacle_detected"]
-    stopped_at = result.get("stopped_at")
 
     # Save command to history
     command_history = CommandHistory(
@@ -69,7 +67,6 @@ async def execute_commands(request: CommandRequest, db: DBSession):
         position_y=y_position,
         direction=direction,
         obstacle_detected=obstacle_detected,
-        stopped_at=stopped_at,
     )
     db.add(command_history)
 
@@ -91,5 +88,4 @@ async def execute_commands(request: CommandRequest, db: DBSession):
         "position": {"x": x_position, "y": y_position},
         "direction": direction,
         "obstacle_detected": obstacle_detected,
-        "stopped_at": stopped_at,
     }

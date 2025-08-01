@@ -38,7 +38,6 @@ class CommandHistory(Base):
     position_y = Column(Integer)
     direction = Column(String(10))
     obstacle_detected = Column(Boolean, default=False)
-    stopped_at = Column(Integer, nullable=True)
     executed_at = Column(DateTime, default=datetime.utcnow)
 
 

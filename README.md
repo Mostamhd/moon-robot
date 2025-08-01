@@ -84,7 +84,6 @@ When an obstacle is detected:
   "position": {"x": 0, "y": 3},
   "direction": "WEST",
   "obstacle_detected": true,
-  "stopped_at": 0
 }
 ```
 

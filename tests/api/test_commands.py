@@ -44,4 +44,3 @@ async def test_obstacle_detection():
     data = response.json()
     assert data["position"] == {"x": 0, "y": 3}  # Should not have moved
     assert data["obstacle_detected"] is True
-    assert data["stopped_at"] == 0  # Stopped at first command

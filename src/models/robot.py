@@ -101,7 +101,7 @@ class Robot:
         if obstacles is None:
             obstacles = set()
 
-        for i, command in enumerate(commands):
+        for command in enumerate(commands):
             prev_position = self.position
 
             # Process the command
@@ -116,7 +116,6 @@ class Robot:
                     "position": {"x": self.position.x, "y": self.position.y},
                     "direction": self.direction,
                     "obstacle_detected": True,
-                    "stopped_at": i,
                 }
 
         return {
