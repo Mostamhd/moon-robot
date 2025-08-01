@@ -20,7 +20,8 @@ class CommandProcessor:
 
         result = await self.db_session.execute(select(Obstacle))
         obstacles = result.scalars().all()
-        return {(obstacle.position_x, obstacle.position_y) for obstacle in obstacles}
+        return {(obstacle.position_x, obstacle.position_y)
+                for obstacle in obstacles}
 
     async def process_commands(
         self,

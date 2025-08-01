@@ -91,7 +91,8 @@ class Robot:
             return False
         return False
 
-    def execute_commands(self, commands: str, obstacles: set | None = None) -> dict:
+    def execute_commands(self, commands: str, obstacles: set | None = None)\
+            -> dict:
         """
         Execute a string of commands.
         Returns a status dictionary with final position, direction,
