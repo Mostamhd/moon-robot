@@ -5,11 +5,11 @@ from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
-from src.robot.core.config import settings
-from src.robot.models.database import CommandHistory, RobotState
-from src.robot.models.robot import Direction, Robot
-from src.robot.services.command_processor import CommandProcessor
-from src.robot.services.database import get_db
+from src.core.config import settings
+from src.models.database import CommandHistory, RobotState
+from src.models.robot import Direction, Robot
+from src.services.command_processor import CommandProcessor
+from src.services.database import get_db
 
 DBSession = Annotated[AsyncSession, Depends(get_db)]
 

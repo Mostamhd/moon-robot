@@ -1,4 +1,4 @@
-from src.robot.models.robot import Direction, Position, Robot
+from src.models.robot import Direction, Position, Robot
 
 
 def test_initial_robot_position():

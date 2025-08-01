@@ -4,9 +4,9 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
-from src.robot.core.config import settings
-from src.robot.models.database import RobotState
-from src.robot.services.database import get_db
+from src.core.config import settings
+from src.models.database import RobotState
+from src.services.database import get_db
 
 DBSession = Annotated[AsyncSession, Depends(get_db)]
 

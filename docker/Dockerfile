@@ -39,4 +39,4 @@ ENV PYTHONUNBUFFERED=1
 USER appuser
 
 # Run the application - note the "src." prefix
-CMD ["uvicorn", "src.robot.main:app", "--host", "0.0.0.0", "--port", "8000", "--loop", "asyncio"]
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000", "--loop", "asyncio"]

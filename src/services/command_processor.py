@@ -3,7 +3,7 @@ from typing import Any
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
-from src.robot.models.robot import Direction, Robot
+from src.models.robot import Direction, Robot
 
 
 class CommandProcessor:
@@ -16,7 +16,7 @@ class CommandProcessor:
         """
         Get obstacles from database
         """
-        from src.robot.models.database import Obstacle
+        from src.models.database import Obstacle
 
         result = await self.db_session.execute(select(Obstacle))
         obstacles = result.scalars().all()

@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from src.robot.api.v1.endpoints import commands, status
+from src.api.v1.endpoints import commands, status
 
 API_V1_STR = "/api/v1"
 

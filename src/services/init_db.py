@@ -1,7 +1,7 @@
 from sqlalchemy.future import select
 
-from src.robot.models.database import Base, Obstacle
-from src.robot.services.database import AsyncSessionLocal, engine
+from src.models.database import Base, Obstacle
+from src.services.database import AsyncSessionLocal, engine
 
 
 async def init_db():
