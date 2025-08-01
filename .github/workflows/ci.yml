@@ -46,7 +46,9 @@ jobs:
         run: . .venv/bin/activate && ruff check .
 
       - name: Type checking with mypy
-        run: . .venv/bin/activate && mypy .
+        run: |
+          . .venv/bin/activate
+          cd src && mypy --explicit-package-bases --config-file=../pyproject.toml .
 
       - name: Run tests
         env:
