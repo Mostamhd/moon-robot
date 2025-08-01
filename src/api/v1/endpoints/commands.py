@@ -5,7 +5,7 @@ from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
-from src.core.config import settings
+from src.config import settings
 from src.models.database import CommandHistory, RobotState
 from src.models.robot import Direction, Robot
 from src.services.command_processor import CommandProcessor

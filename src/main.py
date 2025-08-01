@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from src.api.v1.router import api_router
-from src.core.config import settings
+from src.config import settings
 from src.services.database import engine
 from src.services.init_db import init_db as initialize_database
 
