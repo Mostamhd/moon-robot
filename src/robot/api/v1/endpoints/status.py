@@ -17,8 +17,6 @@ router = APIRouter()
 async def get_status(db: DBSession):
     """
     Returns the current position and direction of the robot.
-    If no state exists in the database, returns the initial state from
-    environment variables.
     """
     # Get the latest robot state from database
     result = await db.execute(
@@ -27,7 +25,7 @@ async def get_status(db: DBSession):
     robot_state = result.scalars().first()
 
     if not robot_state:
-        # Return initial state from environment variables (no eval needed)
+        # Return initial state from environment variable
         return {
             "position": {
                 "x": settings.start_position[0],

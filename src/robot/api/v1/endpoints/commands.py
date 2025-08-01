@@ -31,7 +31,6 @@ class CommandResponse(BaseModel):
 async def execute_commands(request: CommandRequest, db: DBSession):
     """
     Execute a string of commands and return the final position.
-    Handles obstacle detection as specified in Part II of the assessment.
     """
     # Get the latest robot state from database
     result = await db.execute(
