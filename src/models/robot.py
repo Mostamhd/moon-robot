@@ -91,7 +91,7 @@ class Robot:
             return False
         return False
 
-    def execute_commands(self, commands: str, obstacles: set | None = None)\
+    def execute_commands(self, commands: str, obstacles: set | None = None) \
             -> dict:
         """
         Execute a string of commands.
@@ -101,7 +101,7 @@ class Robot:
         if obstacles is None:
             obstacles = set()
 
-        for command in enumerate(commands):
+        for command in commands:
             prev_position = self.position
 
             # Process the command

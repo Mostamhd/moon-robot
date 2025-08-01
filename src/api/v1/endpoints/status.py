@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
-from src.config import settings
+from src.settings import settings
 from src.models.database import RobotState
 from src.services.database import get_db
 
