@@ -36,7 +36,7 @@ This API controls a robot on the Moon, translating commands from Earth to instru
    ```
 3. Set up environment variables:
    ```bash
-   echo "DATABASE_URL=postgresql://robotuser:robotpass@localhost:5432/moonrobot" > .env
+   echo "DATABASE_URL=postgresql+asyncpg://robotuser:robotpass@localhost:5432/moonrobot" > .env
    echo "START_POSITION=(0, 0)" >> .env
    echo "START_DIRECTION=NORTH" >> .env
    ```
@@ -115,8 +115,8 @@ uv run pytest
 
 4. Test obstacle detection (start at position (0,3) facing north):
    ```bash
-   # Reset position for testing
-   curl "http://localhost:8000/api/v1/reset?position=(0,3)&direction=NORTH"
+   # To test from a specific position, restart the application with new environment variables:
+   # START_POSITION="(0,3)" START_DIRECTION="NORTH" uvicorn src.main:app --reload
 
    # Try to move into obstacle at (0,4)
    curl -X POST http://localhost:8000/api/v1/commands \
