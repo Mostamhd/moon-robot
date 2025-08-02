@@ -13,8 +13,13 @@ class Settings(BaseSettings):
     START_DIRECTION: str = os.getenv("START_DIRECTION", "NORTH")
 
     @property
-    def start_position(self) -> tuple:
-        return eval(self.START_POSITION)
+    def start_position(self) -> tuple[int, int]:
+        """Parse START_POSITION string into a tuple safely."""
+        import ast
+
+        pos = ast.literal_eval(self.START_POSITION)
+        assert isinstance(pos, tuple) and len(pos) == 2
+        return (int(pos[0]), int(pos[1]))  # Explicit type conversion
 
     @property
     def start_direction(self) -> str:

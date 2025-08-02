@@ -2,16 +2,17 @@ from datetime import datetime
 
 from sqlalchemy import (
     Boolean,
-    Column,
     DateTime,
     Integer,
     String,
     Text,
     UniqueConstraint,
 )
-from sqlalchemy.orm import declarative_base
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
-Base = declarative_base()
+
+class Base(DeclarativeBase):
+    pass
 
 
 class RobotState(Base):
@@ -19,12 +20,14 @@ class RobotState(Base):
 
     __tablename__ = "robot_state"
 
-    id = Column(Integer, primary_key=True, index=True)
-    position_x = Column(Integer, default=0)
-    position_y = Column(Integer, default=0)
-    direction = Column(String(10), default="NORTH")
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    position_x: Mapped[int] = mapped_column(Integer, default=0)
+    position_y: Mapped[int] = mapped_column(Integer, default=0)
+    direction: Mapped[str] = mapped_column(String(10), default="NORTH")
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime, default=datetime.utcnow, onupdate=datetime.utcnow
+    )
 
 
 class CommandHistory(Base):
@@ -32,13 +35,13 @@ class CommandHistory(Base):
 
     __tablename__ = "command_history"
 
-    id = Column(Integer, primary_key=True, index=True)
-    command = Column(Text, nullable=False)
-    position_x = Column(Integer)
-    position_y = Column(Integer)
-    direction = Column(String(10))
-    obstacle_detected = Column(Boolean, default=False)
-    executed_at = Column(DateTime, default=datetime.utcnow)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    command: Mapped[str] = mapped_column(Text, nullable=False)
+    position_x: Mapped[int | None] = mapped_column(Integer)
+    position_y: Mapped[int | None] = mapped_column(Integer)
+    direction: Mapped[str | None] = mapped_column(String(10))
+    obstacle_detected: Mapped[bool] = mapped_column(Boolean, default=False)
+    executed_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
 
 class Obstacle(Base):
@@ -46,10 +49,10 @@ class Obstacle(Base):
 
     __tablename__ = "obstacles"
 
-    id = Column(Integer, primary_key=True, index=True)
-    position_x = Column(Integer, nullable=False)
-    position_y = Column(Integer, nullable=False)
-    created_at = Column(DateTime, default=datetime.utcnow)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    position_x: Mapped[int] = mapped_column(Integer, nullable=False)
+    position_y: Mapped[int] = mapped_column(Integer, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
     __table_args__ = (
         # Ensure unique positions

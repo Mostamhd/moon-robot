@@ -3,7 +3,7 @@ from typing import Any
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
-from src.models.robot import Direction, Robot
+from src.models.robot import Direction, Position, Robot
 
 
 class CommandProcessor:
@@ -12,7 +12,7 @@ class CommandProcessor:
     def __init__(self, db_session: AsyncSession):
         self.db_session = db_session
 
-    async def get_obstacles(self) -> set[tuple[int, int]]:
+    async def get_obstacles(self) -> set[Position]:
         """
         Get obstacles from database
         """
@@ -20,8 +20,9 @@ class CommandProcessor:
 
         result = await self.db_session.execute(select(Obstacle))
         obstacles = result.scalars().all()
-        return {(obstacle.position_x, obstacle.position_y)
-                for obstacle in obstacles}
+        return {
+            Position(obstacle.position_x, obstacle.position_y) for obstacle in obstacles
+        }
 
     async def process_commands(
         self,

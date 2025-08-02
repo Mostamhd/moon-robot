@@ -1,15 +1,16 @@
+from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
 from src.api.v1.router import api_router
-from src.settings import settings
 from src.services.database import engine
 from src.services.init_db import init_db as initialize_database
+from src.settings import settings
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     """Handle application startup and shutdown events"""
     # Startup
     # TODO add a logger here

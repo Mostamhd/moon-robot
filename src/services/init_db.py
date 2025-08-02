@@ -4,7 +4,7 @@ from src.models.database import Base, Obstacle
 from src.services.database import AsyncSessionLocal, engine
 
 
-async def init_db():
+async def init_db() -> None:
     """Initialize the database with default data"""
     # Create all tables
     async with engine.begin() as conn:

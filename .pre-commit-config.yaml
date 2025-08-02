@@ -24,7 +24,5 @@ repos:
       - id: mypy
         types_or: [python]
         args: [
-          # "--explicit-package-bases",
           "--config-file=pyproject.toml",
-          # "src",
         ]

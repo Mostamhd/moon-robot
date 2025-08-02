@@ -28,3 +28,4 @@ docker-compose.override.yml
 # Logs
 *.log
 QWEN.md
+tmp

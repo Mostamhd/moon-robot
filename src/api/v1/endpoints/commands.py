@@ -5,11 +5,11 @@ from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
-from src.settings import settings
 from src.models.database import CommandHistory, RobotState
 from src.models.robot import Direction, Robot
 from src.services.command_processor import CommandProcessor
 from src.services.database import get_db
+from src.settings import settings
 
 DBSession = Annotated[AsyncSession, Depends(get_db)]
 
@@ -27,15 +27,14 @@ class CommandResponse(BaseModel):
 
 
 @router.post("/commands", response_model=CommandResponse)
-async def execute_commands(request: CommandRequest, db: DBSession):
+async def execute_commands(request: CommandRequest, db: DBSession) -> CommandResponse:
     """
     Execute a string of commands and return the final position.
     """
     # Get the latest robot state from database
-    result = await db.execute(
-        select(RobotState).order_by(RobotState.updated_at.desc()).limit(1)
-    )
-    robot_state = result.scalars().first()
+    stmt = select(RobotState).order_by(RobotState.updated_at.desc()).limit(1)
+    result = await db.execute(stmt)
+    robot_state = result.scalars().first()  # Properly typed as Optional[RobotState]
 
     # If no state exists, initialize with starting position
     if not robot_state:
@@ -51,14 +50,14 @@ async def execute_commands(request: CommandRequest, db: DBSession):
 
     # Execute commands with obstacle detection
     command_processor = CommandProcessor(db)
-    result = await command_processor.process_commands(
+    command_result = await command_processor.process_commands(
         request.command, (robot.position.x, robot.position.y), robot.direction
     )
 
-    x_position = result["position"]["x"]
-    y_position = result["position"]["y"]
-    direction = result["direction"]
-    obstacle_detected = result["obstacle_detected"]
+    x_position = command_result["position"]["x"]
+    y_position = command_result["position"]["y"]
+    direction = command_result["direction"]
+    obstacle_detected = command_result["obstacle_detected"]
 
     # Save command to history
     command_history = CommandHistory(
@@ -84,8 +83,9 @@ async def execute_commands(request: CommandRequest, db: DBSession):
     await db.commit()
 
     # Format response
-    return {
+    response_data = {
         "position": {"x": x_position, "y": y_position},
         "direction": direction,
         "obstacle_detected": obstacle_detected,
     }
+    return CommandResponse(**response_data)

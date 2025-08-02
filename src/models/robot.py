@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import NamedTuple
+from typing import Any, NamedTuple
 
 
 class Direction(str, Enum):
@@ -15,12 +15,12 @@ class Position(NamedTuple):
 
 
 class Robot:
-    def __init__(self, position: tuple[int, int], direction: Direction):
+    def __init__(self, position: tuple[int, int], direction: Direction) -> None:
         self.position = Position(*position)
         self.direction = direction
         self.obstacle_detected = False
 
-    def move_forward(self):
+    def move_forward(self) -> None:
         """Move the robot forward one unit in the current direction"""
         x, y = self.position
 
@@ -35,7 +35,7 @@ class Robot:
 
         self.position = Position(x, y)
 
-    def move_backward(self):
+    def move_backward(self) -> None:
         """Move the robot backward one unit in the current direction"""
         x, y = self.position
 
@@ -50,7 +50,7 @@ class Robot:
 
         self.position = Position(x, y)
 
-    def rotate_left(self):
+    def rotate_left(self) -> None:
         """Rotate the robot 90 degrees to the left (counter-clockwise)"""
         if self.direction == Direction.NORTH:
             self.direction = Direction.WEST
@@ -61,7 +61,7 @@ class Robot:
         elif self.direction == Direction.EAST:
             self.direction = Direction.NORTH
 
-    def rotate_right(self):
+    def rotate_right(self) -> None:
         """Rotate the robot 90 degrees to the right (clockwise)"""
         if self.direction == Direction.NORTH:
             self.direction = Direction.EAST
@@ -91,8 +91,9 @@ class Robot:
             return False
         return False
 
-    def execute_commands(self, commands: str, obstacles: set | None = None) \
-            -> dict:
+    def execute_commands(
+        self, commands: str, obstacles: set[Position] | None = None
+    ) -> dict[str, Any]:
         """
         Execute a string of commands.
         Returns a status dictionary with final position, direction,

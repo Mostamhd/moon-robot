@@ -55,12 +55,4 @@ jobs:
           DATABASE_URL: "postgresql://testuser:testpass@localhost:5432/testdb"
         run: |
           . .venv/bin/activate
-          pytest --cov=src/robot --cov-report=xml
-
-      - name: Upload coverage
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./coverage.xml
-          flags: unittests
-          name: Moon Robot API
+          pytest

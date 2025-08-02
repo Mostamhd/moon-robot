@@ -1,12 +1,12 @@
-from typing import Annotated
+from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
-from src.settings import settings
 from src.models.database import RobotState
 from src.services.database import get_db
+from src.settings import settings
 
 DBSession = Annotated[AsyncSession, Depends(get_db)]
 
@@ -14,7 +14,7 @@ router = APIRouter()
 
 
 @router.get("/status")
-async def get_status(db: DBSession):
+async def get_status(db: DBSession) -> dict[str, Any]:
     """
     Returns the current position and direction of the robot.
     """
