@@ -36,11 +36,8 @@ jobs:
       - name: Install UV
         run: pip install uv
 
-      - name: Create virtual environment
-        run: uv venv
-
       - name: Install dependencies
-        run: . .venv/bin/activate && uv sync
+        run:  uv sync
 
       - name: Lint with Ruff
         run: . .venv/bin/activate && ruff check .
