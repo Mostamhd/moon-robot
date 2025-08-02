@@ -48,7 +48,7 @@ jobs:
       - name: Type checking with mypy
         run: |
           . .venv/bin/activate
-          cd src && mypy -config-file=../pyproject.toml .
+          cd src && mypy
 
       - name: Run tests
         env:
