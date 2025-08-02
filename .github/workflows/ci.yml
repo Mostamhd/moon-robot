@@ -48,7 +48,7 @@ jobs:
       - name: Type checking with mypy
         run: |
           . .venv/bin/activate
-          cd src && mypy
+          mypy src
 
       - name: Run tests
         env:
