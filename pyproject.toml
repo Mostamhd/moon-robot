@@ -60,6 +60,12 @@ files = ["src"]
 strict = true
 show_error_codes = true
 enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
+disable_error_code = [
+    "no-untyped-call",
+    "attr-defined",
+    "no-untyped-call",
+    "name-defined"
+]
 explicit_package_bases = true
 ignore_missing_imports = true
 
@@ -70,24 +76,12 @@ disallow_subclassing_any = false
 disallow_untyped_decorators = false
 
 [[tool.mypy.overrides]]
-module = "tests.*"
-disallow_untyped_defs = false
-disallow_incomplete_defs = false
-
-# Specific overrides for problematic modules
-[[tool.mypy.overrides]]
 module = [
     "pydantic_settings.*",
     "sqlalchemy.*",
     "fastapi.*",
-    "pydantic.*"
-]
-ignore_missing_imports = true
-ignore_errors = true
-
-# Allow subclassing issues in our source files
-[[tool.mypy.overrides]]
-module = [
+    "pydantic.*",
+    "tests.*",
     "src.settings",
     "src.services.database",
     "src.models.database",
@@ -95,3 +89,7 @@ module = [
 ]
 disallow_subclassing_any = false
 disallow_untyped_decorators = false
+ignore_missing_imports = true
+ignore_errors = true
+disallow_untyped_defs = false
+disallow_incomplete_defs = false

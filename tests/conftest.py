@@ -12,7 +12,6 @@ from src.services.database import get_db
 
 @pytest.fixture(scope="session")
 def test_engine():
-    """Create a test sync database engine"""
     engine = create_engine(
         "sqlite:///:memory:",
         connect_args={"check_same_thread": False},
@@ -25,7 +24,6 @@ def test_engine():
 
 @pytest.fixture(scope="function")
 def test_db_session(test_engine):
-    """Create a test sync DB session"""
     TestingSessionLocal = sessionmaker(
         autocommit=False, autoflush=False, bind=test_engine
     )
@@ -50,7 +48,6 @@ AsyncTestingSessionLocal = async_sessionmaker(
 
 @pytest.fixture(scope="function", autouse=True)
 async def prepare_database():
-    """Ensure DB schema is fresh before each async test"""
     async with async_engine.begin() as conn:
         await conn.run_sync(Base.metadata.drop_all)
         await conn.run_sync(Base.metadata.create_all)
@@ -58,15 +55,12 @@ async def prepare_database():
 
 @pytest.fixture
 async def async_db_session():
-    """Create an async DB session for test override"""
     async with AsyncTestingSessionLocal() as session:
         yield session
 
 
 @pytest.fixture
 async def client(async_db_session):
-    """Return a test client with DB override"""
-
     async def override_get_db():
         yield async_db_session
 
@@ -78,3 +72,24 @@ async def client(async_db_session):
         yield ac
 
     app.dependency_overrides.clear()
+
+
+@pytest.fixture
+def robot_state_factory():
+    from tests.factories import RobotStateFactory
+
+    return RobotStateFactory
+
+
+@pytest.fixture
+def command_history_factory():
+    from tests.factories import CommandHistoryFactory
+
+    return CommandHistoryFactory
+
+
+@pytest.fixture
+def obstacle_factory():
+    from tests.factories import ObstacleFactory
+
+    return ObstacleFactory
